@@ -16,7 +16,8 @@
     <div id="calcBody">
 
         <div id="calcScreen">
-            <div id="calcScreenNums"></div>
+            <div id="prevCalcScreenNums">210 +</div>
+            <div id="currCalcScreenNums"></div>
             <!-- JS will display this -->
         </div>
         
@@ -24,13 +25,13 @@
             
             <div class="buttonRow row1">
                 <button class="clear button">AC</button>
-                <button class="squared operation button">x&#178;</button>
-                <button class="sqrt operation button" value="sqrt">&radic;</button>
-                <button class="divide operation button">&#247;</button>
+                <button class="squared operation button" id="squared">x&#178;</button>
+                <button class="sqrt operation button" value="sqrt" id="sqrt">&radic;</button>
+                <button class="divide operation button" id="divide">&#247;</button>
             </div>
 
             <div class="buttonRow row2">
-                <button class="seven numButton seven button " value="7" id="seven">7</button>
+                <button class="seven button numButton" value="7" id="seven">7</button>
                 <button class="eight button numButton" value="8">8</button>
                 <button class="nine button numButton" value="9">9</button>
                 <button class="multiply operation button" value="x">x</button>
@@ -70,6 +71,7 @@
 
 
 <script src="index.js"></script>    
+<script src="tryagain.js"></script>   
 </body>
 
 </html>
