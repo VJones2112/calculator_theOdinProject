@@ -25,49 +25,79 @@
 */
 
 // Global variables
-const prevNums = document.getElementById('prevCalcScreenNums');
-const currNums = document.getElementById('currCalcScreenNums');
+let prevNums = document.getElementById('prevCalcScreenNums');
+let currNums = document.getElementById('currCalcScreenNums');
 let numString1= parseFloat(prevNums.textContent);;
 let numString2;
 
 
 // Operator functions
-const add = (num1, num2) => {
-    return num1 + num2;
-}
+// const add = (num1, num2) => {
+//     return num1 + num2;
+// }
 
-const subtract = (num1, num2) => {
-    return num1 - num2;
-}
+// const subtract = (num1, num2) => {
+//     return num1 - num2;
+// }
 
-const multiply = (num1, num2) => {
-    return num1 * num2;
-}
+// const multiply = (num1, num2) => {
+//     return num1 * num2;
+// }
 
-const divide = (num1, num2) => {
-    return num2 === 0 ? console.log("Can't do that, mate.") : num1 / num2;
-}
+// const divide = (num1, num2) => {
+//     return num2 === 0 ? console.log("Can't do that, mate.") : num1 / num2;
+// }
+
+const operators = document.querySelectorAll('.operation');
+    operators.forEach(button => button.addEventListener('click', function() {
+        prevNums.innerHTML = currNums.textContent + ' '; 
+        prevNums.innerHTML += button.value;
+        currNums.innerHTML = '';
+    }))
+
 
 // The OPERATE function
 const operate = (operator, num1, num2) => {
-    //console.log('start operating');// Yes, this is reached
-    num1 = prevNums.textContent;
-    num2 = currNums.textContent;
-    console.log(num1.slice(0,-1), num2); // Yes, but now how do I actually add them?...
-    switch (operator) {
-        case 'add':
-            return add(num1.slice(0, -1), num2);
-            break;
-        case 'subtract':
-            subtract(num1, num2);
-            break;
-        case 'multiply':
-            multiply(num1, num2);
-            break;
-        case 'divide':
-            divide(num1, num2);
-            break;
+    num1 = parseFloat(prevNums.textContent.slice(0,-1));
+    num2 = parseFloat(currNums.textContent);
+    const maxLength = 10;
+    let solution;
+
+    if (prevNums.textContent.slice(-1) === '+') {
+        prevNums.textContent += ' ' + currNums.textContent;
+        solution = num1 + num2;
     }
+
+    if (prevNums.textContent.slice(-1) === '-') {
+        prevNums.textContent += ' ' + currNums.textContent;
+        solution = num1 - num2;
+    }
+
+    if (prevNums.textContent.slice(-1) === 'x') {
+        prevNums.textContent += ' ' + currNums.textContent;
+        solution = num1 * num2;
+    }
+
+    if (prevNums.textContent.slice(-1) === '÷') {
+        prevNums.textContent += ' ' + currNums.textContent;
+        solution = num1 / num2;
+    }
+
+    if (prevNums.textContent.slice(-1) === '²') {
+        prevNums.textContent += currNums.textContent;
+        solution = num1 ** 2;
+    }
+
+    if (prevNums.textContent.slice(-1) === '√') {
+        prevNums.textContent += '' + currNums.textContent;
+        solution = Math.sqrt(num1);
+    }
+
+
+    if (solution.toString().length > maxLength) {
+        solution = solution.toFixed(5);
+    }
+    currNums.textContent = solution;
 }
 
 
@@ -75,27 +105,11 @@ const operate = (operator, num1, num2) => {
 const displayNums = () => {
     const nums = document.querySelectorAll('.numButton');
     nums.forEach(button => button.addEventListener('click', function() {
-        // prevNums.innerHTML += button.value; // Shouldn't be the small ones
         currNums.innerHTML += button.value;
-        // updateCalcScreen(button.value);
     }));
-    const operators = document.querySelectorAll('.operation');
-    operators.forEach(button => button.addEventListener('click', function() {
-        prevNums.innerHTML = currNums.textContent; 
-        prevNums.innerHTML += button.textContent;
-        currNums.innerHTML = '';
-    }))
 }
 
 displayNums();
-
-// The DISPLAY function, part II
-// DOESN'T DO ANYTHING
-const updateCalcScreen = (inputValue) => {
-    prevNums.innerHTML += inputValue;
-}
-
-
 
 
 // Event Listeners
@@ -104,6 +118,5 @@ document.querySelector('.clear').addEventListener('click', function () {
     prevNums.innerHTML = '';
     currNums.innerHTML = '';
 })
-document.querySelector('.add').addEventListener('click', operate(add, numString1, numString2) );
 
 document.querySelector('.enter').addEventListener('click', operate);
