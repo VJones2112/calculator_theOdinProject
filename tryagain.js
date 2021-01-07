@@ -1,7 +1,7 @@
 /*
 *****STEPS*****
     X1. Build the calculator in html
-    2. Create the global variables
+    X2. Create the global variables
         a. prevCalcScreenNums (id Name)
     X3. Crate operator functions
         a. add
@@ -27,34 +27,34 @@
 // Global variables
 let prevNums = document.getElementById('prevCalcScreenNums');
 let currNums = document.getElementById('currCalcScreenNums');
-let numString1= parseFloat(prevNums.textContent);;
-let numString2;
 
 
-// Operator functions
-// const add = (num1, num2) => {
-//     return num1 + num2;
-// }
-
-// const subtract = (num1, num2) => {
-//     return num1 - num2;
-// }
-
-// const multiply = (num1, num2) => {
-//     return num1 * num2;
-// }
-
-// const divide = (num1, num2) => {
-//     return num2 === 0 ? console.log("Can't do that, mate.") : num1 / num2;
-// }
 
 const operators = document.querySelectorAll('.operation');
     operators.forEach(button => button.addEventListener('click', function() {
         prevNums.innerHTML = currNums.textContent + ' '; 
         prevNums.innerHTML += button.value;
         currNums.innerHTML = '';
-    }))
+    }));
 
+const sqrt = document.querySelector('.sqrt');
+sqrt.addEventListener('click', function() {
+    prevNums.innerHTML = sqrt.textContent;
+    // prevNums += currNums.textContent;
+    currNums.innerHTML = '';
+});
+
+const posNeg = document.querySelector('.posNeg');
+/**/posNeg.addEventListener('click', function() {
+    
+    currNums.innerHTML[0] !== '-' ? currNums.innerHTML = '-' + currNums.innerHTML : currNums.innerHTML[0].replace('-', '');
+    return;
+    // console.log('here');
+//    currNums.textContent[0].match(/[0-9]/g) ? currNums.textContent += '-' : console.log('there');
+//     //currNums.textContent[0] += '-' : currNums.textContent[0] = '';
+    // currNums.innerHTML = '';
+})
+/**/
 
 // The OPERATE function
 const operate = (operator, num1, num2) => {
@@ -80,7 +80,7 @@ const operate = (operator, num1, num2) => {
 
     if (prevNums.textContent.slice(-1) === '÷') {
         prevNums.textContent += ' ' + currNums.textContent;
-        solution = num1 / num2;
+        num2 === 0 ? currNums.textContent = 'Impossible!' : solution = num1 / num2;
     }
 
     if (prevNums.textContent.slice(-1) === '²') {
@@ -88,15 +88,17 @@ const operate = (operator, num1, num2) => {
         solution = num1 ** 2;
     }
 
-    if (prevNums.textContent.slice(-1) === '√') {
+    if (prevNums.textContent.slice(0,1) === '√') {
         prevNums.textContent += '' + currNums.textContent;
+        num1 = parseFloat(prevNums.textContent.slice(1));
         solution = Math.sqrt(num1);
     }
 
-
     if (solution.toString().length > maxLength) {
-        solution = solution.toFixed(5);
+        // solution = '~' + Math.round(solution * 100) / 100;
+        solution = Math.round(solution * 100) / 100;
     }
+
     currNums.textContent = solution;
 }
 
@@ -118,5 +120,5 @@ document.querySelector('.clear').addEventListener('click', function () {
     prevNums.innerHTML = '';
     currNums.innerHTML = '';
 })
-
+// Event Listener to Calculate
 document.querySelector('.enter').addEventListener('click', operate);
