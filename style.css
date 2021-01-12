@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -7,29 +9,38 @@
 body {
     font-size: 20px;
     font-family: sans-serif;
+    background: #F4AFB4;
+    font-family: 'Share Tech Mono', monospace;
+    /* font-family: 'Major Mono Display', monospace; */
+    /* font-family: 'Montserrat', sans-serif; */
 }
 
 #calcBody {
-    border: 1px solid black;
+    border: 1px dotted #4F5254;
     height: 400px;
     width: 300px;
     margin: 2rem auto 0 auto;
-    box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 5px 5px 15px 5px #4F5254;
+    background: #A5B6AA;
 }
 
 #calcScreen {
-    border-bottom: 1px solid black;
-    background-color: lightgray;
+    /* border-bottom: 1px solid black; */
+    background-color: #F6D3CB;
     height: 100px;
+    margin: 0.5rem;
+    overflow: hidden;
+    border: 1px dotted #4F5254;
 }
 
 #prevCalcScreenNums, #currCalcScreenNums {
     display: inline-block;
     position: absolute;
-    width: 300px;
+    width: 296px;
     padding: .5rem;
     height: 100px;
     overflow: hidden;
+    /* font-family: 'Major Mono Display', monospace; */
 }
 
 #prevCalcScreenNums {
@@ -41,7 +52,7 @@ body {
     text-align: right;
     font-size: 200%;
     margin-top: 2.5rem;
-    
+    padding-right: 1.2rem;
     /* border: 1px solid green; */
 }
 
@@ -49,17 +60,27 @@ body {
     position: relative;
 }
 
+/* button {background: #EFB0A1; margin: 0.5rem; } */
+
 .buttonRow {
     /* position: relative; */
-    width: 300px;
+    width: 296px;
     display: flex;
     justify-content: space-evenly;
-    height: 60px;
+    height: 55px;
 }
 
 .button {
     flex-grow: 1;
     width: 25%;
     font-size: 20px;
+    background: #F6D3CB; 
+    margin: 0.5rem;
+    border-radius: 1rem;
+    border: 1px dotted #4F5254;
     /* font-weight: bold; */
+}
+
+.button:hover {
+    transform: scale(1.1);
 }

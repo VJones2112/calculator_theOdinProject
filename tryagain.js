@@ -28,14 +28,19 @@
 let prevNums = document.getElementById('prevCalcScreenNums');
 let currNums = document.getElementById('currCalcScreenNums');
 // let solution;
-
+// const updateScreen = () => {
+//     if (operators) {
+        
+//     }
+// }
 
 const operators = document.querySelectorAll('.operation');
-    operators.forEach(button => button.addEventListener('click', function() {
+operators.forEach(button => button.addEventListener('click', function() {
         prevNums.innerHTML = currNums.textContent + ' '; 
         prevNums.innerHTML += button.value;
         currNums.innerHTML = '';
-    }));
+    }
+));
 
 const sqrt = document.querySelector('.sqrt');
 sqrt.addEventListener('click', function() {
@@ -49,7 +54,7 @@ posNeg.addEventListener('click', function() {
         return;
     };
     currNums.innerHTML = parseFloat(currNums.innerHTML) * -1;
-})
+});
 
 const decimal = document.querySelector('.decimal');
 decimal.addEventListener('click', function() {
@@ -57,8 +62,7 @@ decimal.addEventListener('click', function() {
         return;
     };
     currNums.innerHTML += '.';
-
-})
+});
 
 
 // The OPERATE function
@@ -71,8 +75,10 @@ const operate = (num1, num2) => {
     if (prevNums.textContent.slice(-1) === '+') {
         prevNums.textContent += ' ' + currNums.textContent;
         solution = num1 + num2;
+        // console.log(typeof(solution)) // 
+        return;// doesn't stop!
     }
-
+    
     if (prevNums.textContent.slice(-1) === '-') {
         prevNums.textContent += ' ' + currNums.textContent;
         solution = num1 - num2;
@@ -81,32 +87,40 @@ const operate = (num1, num2) => {
     if (prevNums.textContent.slice(-1) === 'x') {
         prevNums.textContent += ' ' + currNums.textContent;
         solution = num1 * num2;
+        
     }
 
     if (prevNums.textContent.slice(-1) === '÷') {
         prevNums.textContent += ' ' + currNums.textContent;
         num2 === 0 ? currNums.textContent = 'Impossible!' : solution = num1 / num2;
+        if (solution.toString().length > maxLength) {
+            solution = Math.round(solution * 1000000) / 1000000;
+        }
     }
 
     if (prevNums.textContent.slice(-1) === '²') {
         prevNums.textContent += currNums.textContent;
         solution = num1 ** 2;
+        if (solution.toString().length > maxLength) {
+            solution = Number.parseFloat(solution).toExponential(3);
+        }
     }
 
     if (prevNums.textContent.slice(0,1) === '√') {
         prevNums.textContent += '' + currNums.textContent;
         num1 = parseFloat(prevNums.textContent.slice(1));
         solution = Math.sqrt(num1);
+        if (solution.toString().length > maxLength) {
+            solution = Math.round(solution * 10000) / 10000;
+        }
     }
 
-    if (solution.toString().length > maxLength) {
-        // solution = '~' + Math.round(solution * 100) / 100;
-        // solution = Math.round(solution * 1000) / 1000 :
-        solution = Number.parseFloat(solution).toExponential(3);
-
+    if (solution.toString().includes('.') && solution.toString().length > maxLength) {
+        solution = Math.round(solution * 10000) / 10000;
     }
 
     currNums.textContent = solution;
+    
 }
 
 
@@ -128,4 +142,14 @@ document.querySelector('.clear').addEventListener('click', function () {
     currNums.innerHTML = '';
 })
 // Event Listener to Calculate
-document.querySelector('.enter').addEventListener('click', operate);
+document.querySelector('.enter').addEventListener('click', function() {
+    operate();
+    currNums.innerHTML += '';// Nope
+    return;//This doesn't work either!!!!
+});
+
+// Keydown Event Listener NOPE!!!!!!!!!!!!!!!
+// window.addEventListener('keydown', function(e){
+//     const key = document.querySelector(`button[data-key='${e.key}']`);
+//     key.click();
+// });
